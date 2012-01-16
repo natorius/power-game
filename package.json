@@ -4,13 +4,14 @@
   , "description": "A power station game"
   , "keywords": ["power", "game"]
   , "author": "Nate Green <nate.green@gmail.com>"
-  , "main": "main"
+  , "main": "./lib/index.js"
   , "engines": { "node": ">= 0.4.x < 0.7.0" }
   , "scripts": {
     "test": "mocha"
   }
   , "devDependencies": {
     "mocha": "0.10.x",
-    "should": "0.5.x"
+    "should": "0.5.x",
+    "underscore": "1.3.x"
   }
 }
