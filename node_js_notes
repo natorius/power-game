@@ -1,0 +1,2 @@
+ * Add things to package.json:devDependencies then do npm install
+ * npm test runs command under package.json:test
