@@ -1,5 +1,6 @@
 var should    = require('should');
 var resources = require('../lib/resources.js');
+var gameState = require("../lib/gameState.js");
 
 describe('resources', function(){
   it('should exist', function(){
@@ -15,7 +16,7 @@ describe('resources', function(){
 
   it('should always init to intial resources', function(){
     resources.init();
-
+    
     should.equal(resources.count('coal'),    24);
     should.equal(resources.count('oil'),     18);
     should.equal(resources.count('trash'),    6);
@@ -46,8 +47,8 @@ describe('resources', function(){
   it('should replenish resources correctly for 2 players', function(){
     resources.buy(3, 'coal'); //4 total gone (see buying test)
 
-    resources.replenish({ players: 2, stage: 1 });
-
+    // gameState defaults to 2 players, stage 1 
+    resources.replenish();
     should.equal(resources.count('coal'), 23);
     should.equal(resources.count('oil'), 16);
     should.equal(resources.count('trash'), 7);
@@ -58,14 +59,18 @@ describe('resources', function(){
     resources.buy(16, 'coal'); //7 left
     resources.buy(7, 'oil'); //9 left
 
-    resources.replenish({ players: 5, stage: 2 });
+    gameState.setPlayers(5);
+    gameState.setStage(2);
+    resources.replenish();
 
     should.equal(resources.count('coal'), 14);
     should.equal(resources.count('oil'), 14);
     should.equal(resources.count('trash'), 10);
     should.equal(resources.count('uranium'), 6);
 
-    resources.replenish({ players: 5, stage: 3 });
+    gameState.setPlayers(5);
+    gameState.setStage(3);
+    resources.replenish();
 
     should.equal(resources.count('coal'), 19);
     should.equal(resources.count('oil'), 20);

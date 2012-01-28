@@ -1,7 +1,7 @@
-var should = require('should');
-var _ = require('underscore');
-var GameStateConstructor = require('../lib/gameState.js'); 
-var gameState = new GameStateConstructor();
+var should    = require('should');
+var _         = require('underscore');
+var util      = require("../lib/util.js");
+var gameState = require('../lib/gameState.js'); 
 
 /* 
  * Game state is the 'store' for the current version's state
@@ -25,16 +25,30 @@ describe('gameState', function(){
     });
   });
 
-  console.log(gameState.resources.getCoal);
-  console.log(gameState.resources.setCoal + "asdf");
-
   it('should have getter/setters for all 4 resources', function(){
-    var resources = gameState.resources;
+    _.each(["coal", "oil", "trash", "uranium"], function(type) {
+      var ucType = util.ucFirst(type);
+      var setter = "set" + ucType;
+      var getter = "get" + ucType;
+      var incrementer = "increment" + ucType;
 
-    resources.setCoal(0);
-    should.equal(resources.getCoal, 0);
+      gameState.resources[setter](0);
+      should.equal(gameState.resources[getter](), 0);
 
-    resources.setCoal(9);
-    should.equal(resources.getCoal, 9);
+      gameState.resources[setter](9);
+      should.equal(gameState.resources[getter](), 9);
+
+      gameState.resources[incrementer](3);
+      should.equal(gameState.resources[getter](), 12);
+
+    });
   });
+  it('should have getter/setters for all members', function(){
+    _.each(["players", "stage"], function(member) {
+      var ucMember = util.ucFirst(member);
+      gameState["set" + ucMember](3);
+      gameState["get" + ucMember](3);
+    });
+  });
+
 });
