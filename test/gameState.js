@@ -1,6 +1,6 @@
 var should    = require('should');
 var _         = require('underscore');
-var util      = require("../lib/util.js");
+var util      = require('../lib/util.js');
 var gameState = require('../lib/gameState.js'); 
 
 /* 
@@ -25,29 +25,30 @@ describe('gameState', function(){
     });
   });
 
-  it('should have getter/setters for all 4 resources', function(){
-    _.each(["coal", "oil", "trash", "uranium"], function(type) {
-      var ucType = util.ucFirst(type);
-      var setter = "set" + ucType;
-      var getter = "get" + ucType;
-      var incrementer = "increment" + ucType;
+  it('should have a getter/setter that works for all 4 resources', function(){
+    _.each(['coal', 'oil', 'trash', 'uranium'], function(type) {
+      gameState.resources.set(type, 0);
+      should.equal(gameState.resources.get(type), 0);
 
-      gameState.resources[setter](0);
-      should.equal(gameState.resources[getter](), 0);
+      gameState.resources.set(type, 9);
+      should.equal(gameState.resources.get(type), 9);
+    });
+  });
+   it('should have a inc/decrementing that works for all 4 resources', function(){
+    _.each(['coal', 'oil', 'trash', 'uranium'], function(type) {
+      gameState.resources.increment(type, 3);
+      should.equal(gameState.resources.get(type), 12);
 
-      gameState.resources[setter](9);
-      should.equal(gameState.resources[getter](), 9);
-
-      gameState.resources[incrementer](3);
-      should.equal(gameState.resources[getter](), 12);
+      gameState.resources.decrement(type, 2);
+      should.equal(gameState.resources.get(type), 10);
 
     });
   });
   it('should have getter/setters for all members', function(){
-    _.each(["players", "stage"], function(member) {
+    _.each(['players', 'stage'], function(member) {
       var ucMember = util.ucFirst(member);
-      gameState["set" + ucMember](3);
-      gameState["get" + ucMember](3);
+      gameState['set' + ucMember](3);
+      gameState['get' + ucMember](3);
     });
   });
 

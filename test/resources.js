@@ -1,6 +1,6 @@
 var should    = require('should');
 var resources = require('../lib/resources.js');
-var gameState = require("../lib/gameState.js");
+var gameState = require('../lib/gameState.js');
 
 describe('resources', function(){
   it('should exist', function(){
